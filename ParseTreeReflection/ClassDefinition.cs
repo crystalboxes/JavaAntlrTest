@@ -1,23 +1,30 @@
+using static JavaAST.AntlrParser.Java9Parser;
+
 namespace JavaAST.PaseTreeReflection
 {
     class ClassDefinition : IDefinitionNode
     {
-        public ClassDefinition(string name)
-        {
-            Name = name;
-        }
         public string? Name { get; set; }
 
         public List<ClassDefinition> ClassDefinitions { get; set; } = new();
 
-        public  void Attach(IDefinitionNode node)
+        public void Attach(IDefinitionNode? node)
         {
-            throw new NotImplementedException();
         }
 
-        public  void Build(string method, dynamic context)
+        public void Build(string method, dynamic context)
         {
-            throw new NotImplementedException();
+            switch (method)
+            {
+                case "VisitIdentifier":
+                    if (Name == null)
+                    {
+                        Name = (context as IdentifierContext)?.Start.Text;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

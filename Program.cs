@@ -14,7 +14,8 @@ public static class Program
         var parser = new Java9Parser(new CommonTokenStream(lexer));
         var tree = parser.compilationUnit();
 
-        var visitor = new ReflectionVisitor();
+        var def = new UnitDefinition();
+        var visitor = new ReflectionVisitor(0, def);
         visitor.Visit(tree);
 
 

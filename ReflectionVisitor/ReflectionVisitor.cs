@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Antlr4.Runtime.Tree;
+using JavaAST.AntlrParser;
 using JavaAST.PaseTreeReflection;
 
 namespace JavaAST.ReflectionVisitor
@@ -43,6 +44,7 @@ namespace JavaAST.ReflectionVisitor
             }
 
             Console.WriteLine($"{space}Visited {methodName}");
+            _owner?.Build(methodName, context);
         }
 
 
@@ -51,13 +53,15 @@ namespace JavaAST.ReflectionVisitor
             return base.VisitChildren(node);
         }
 
+
         public override Result VisitChildren(IRuleNode node)
         {
-            var newOwner = _owner;
+            IDefinitionNode? newOwner;
+
             switch (_lastMethod)
             {
                 case "VisitClassDeclaration":
-                    newOwner = new ClassDefinition("dog?");
+                    newOwner = new ClassDefinition();
                     _owner?.Attach(newOwner);
                     break;
                 default:
