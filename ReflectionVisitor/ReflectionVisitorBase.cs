@@ -1,47 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using Antlr4.Runtime.Tree;
 
+using JavaAST.AntlrParser;
+
+namespace JavaAST.ReflectionVisitor;
+
 public struct Result
 {
-
 }
 
-public class JavaVisitor : AbstractParseTreeVisitor<Result>, IJava9ParserVisitor<Result>
+public abstract class ReflectionVisitorBase : AbstractParseTreeVisitor<Result>, IJava9ParserVisitor<Result>
 {
-
-    int depth = 0;
-    static List<string> _methodsToIgnore = new()
-    {
-    };
-
-    private void HandleIntermediateVisit(string methodName, [NotNull] dynamic context)
-    {
-        if (_methodsToIgnore.Contains(methodName))
-        {
-            Console.WriteLine($"____Ignored {methodName}");
-            return;
-        }
-        var space = "";
-        for (int i = 0; i < depth; i++)
-        {
-            space += " ";
-        }
-
-        Console.WriteLine($"{space}Visited {methodName}");
-    }
-
-
-    public Result VisitChildren2(IRuleNode node) {
-        return base.VisitChildren(node);
-    }
-
-    public override Result VisitChildren(IRuleNode node)
-    {
-        var childVisitor = new JavaVisitor();
-        childVisitor.depth = this.depth + 1;
-        return childVisitor.VisitChildren2(node);
-    }
-
+    protected abstract void HandleIntermediateVisit(string methodName, [NotNull] dynamic context);
 
 
     /// <summary>

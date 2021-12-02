@@ -1,8 +1,8 @@
 namespace JavaAST.PaseTreeReflection
 {
-
-    class ClassBuilder
+    class ClassFieldDefinition
     {
         public string? Name { get; set; }
+        public string? TypeName { get; set; }
     }
 }

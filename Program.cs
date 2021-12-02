@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
-
+using JavaAST.AntlrParser;
+using JavaAST.ReflectionVisitor;
 
 public static class Program
 {
@@ -13,10 +14,10 @@ public static class Program
         var parser = new Java9Parser(new CommonTokenStream(lexer));
         var tree = parser.compilationUnit();
 
-        var visitor = new JavaVisitor();
+        var visitor = new ReflectionVisitor();
         visitor.Visit(tree);
 
-        
+
         Console.WriteLine("heloo world ");
     }
 }

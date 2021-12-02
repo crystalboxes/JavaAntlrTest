@@ -22,13 +22,13 @@
 using Antlr4.Runtime.Misc;
 using IParseTreeListener = Antlr4.Runtime.Tree.IParseTreeListener;
 using IToken = Antlr4.Runtime.IToken;
-
+namespace JavaAST.AntlrParser
+{
 /// <summary>
 /// This interface defines a complete listener for a parse tree produced by
 /// <see cref="Java9Parser"/>.
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.9.3")]
-[System.CLSCompliant(false)]
 public interface IJava9ParserListener : IParseTreeListener {
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Java9Parser.literal"/>.
@@ -2480,4 +2480,5 @@ public interface IJava9ParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitIdentifier([NotNull] Java9Parser.IdentifierContext context);
+}
 }
