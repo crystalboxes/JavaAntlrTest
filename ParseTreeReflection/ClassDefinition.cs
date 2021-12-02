@@ -10,12 +10,12 @@ namespace JavaAST.PaseTreeReflection
 
         public List<ClassDefinition> ClassDefinitions { get; set; } = new();
 
-        public void Attach(IDefinitionNode node)
+        public  void Attach(IDefinitionNode node)
         {
             throw new NotImplementedException();
         }
 
-        public void ReadParseData(string methodName, dynamic context)
+        public  void Build(string method, dynamic context)
         {
             throw new NotImplementedException();
         }
