@@ -5,7 +5,7 @@ namespace JavaAST.PaseTreeReflection
         public string? Name { get; set; }
         public string? TypeName { get; set; }
 
-        public void Attach(IDefinitionNode node)
+        public void Attach(IDefinitionNode? node)
         {
             throw new NotImplementedException();
         }

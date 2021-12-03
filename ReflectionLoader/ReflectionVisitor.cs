@@ -3,7 +3,7 @@ using Antlr4.Runtime.Tree;
 using JavaAST.AntlrParser;
 using JavaAST.PaseTreeReflection;
 
-namespace JavaAST.ReflectionVisitor
+namespace JavaAST.ReflectionLoader
 {
 
     class ReflectionVisitor : ReflectionVisitorBase

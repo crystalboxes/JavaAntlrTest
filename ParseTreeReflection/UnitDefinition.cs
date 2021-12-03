@@ -2,16 +2,20 @@ using JavaAST.PaseTreeReflection;
 
 public class UnitDefinition : IDefinitionNode
 {
+    public List<ClassDefinition> Classes { get => _classes; }
 
     List<ClassDefinition> _classes = new();
+
+
     public void Attach(IDefinitionNode? node)
     {
-        if (node == null) {
+        if (node == null)
+        {
             return;
         }
         if (node is ClassDefinition)
         {
-            _classes.Add((node as ClassDefinition)!);
+            Classes.Add((node as ClassDefinition)!);
         }
     }
 

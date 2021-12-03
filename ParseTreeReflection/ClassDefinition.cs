@@ -2,7 +2,7 @@ using static JavaAST.AntlrParser.Java9Parser;
 
 namespace JavaAST.PaseTreeReflection
 {
-    class ClassDefinition : IDefinitionNode
+    public class ClassDefinition : IDefinitionNode
     {
         public string? Name { get; set; }
 

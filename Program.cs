@@ -1,23 +1,12 @@
 ﻿using Antlr4.Runtime;
+using JavaAST.Helpers;
 using JavaAST.AntlrParser;
-using JavaAST.ReflectionVisitor;
 
 public static class Program
 {
     public static void Main()
     {
-        var text = File.ReadAllText("HelloWorld.java");
-        var lexer = new Java9Lexer(new AntlrInputStream(text));
-
-
-
-        var parser = new Java9Parser(new CommonTokenStream(lexer));
-        var tree = parser.compilationUnit();
-
-        var def = new UnitDefinition();
-        var visitor = new ReflectionVisitor(0, def);
-        visitor.Visit(tree);
-
+        var def = TreeLoaderHelper.FromFile("Tests/HelloWorld.java");
 
         Console.WriteLine("heloo world ");
     }
