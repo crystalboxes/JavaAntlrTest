@@ -47,7 +47,7 @@ namespace JavaAST.ReflectionLoader
             }
 
             Console.WriteLine($"{space}Visited {methodName}");
-            _owner?.Build(methodName, context);
+            _owner.Build(methodName, context);
         }
 
 
@@ -59,13 +59,13 @@ namespace JavaAST.ReflectionLoader
 
         public override Result VisitChildren(IRuleNode node)
         {
-            IDefinitionNode? newOwner;
+            IDefinitionNode newOwner;
 
             switch (_lastMethod)
             {
                 case "VisitClassDeclaration":
                     newOwner = new ClassDefinition();
-                    _owner?.Attach(newOwner);
+                    _owner.Attach(newOwner);
                     break;
                 default:
                     newOwner = _owner;
