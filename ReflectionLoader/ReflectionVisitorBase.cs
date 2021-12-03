@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 using JavaAST.AntlrParser;
@@ -11,7 +12,7 @@ namespace JavaAST.ReflectionLoader
 
     public abstract class ReflectionVisitorBase : AbstractParseTreeVisitor<Result>, IJava9ParserVisitor<Result>
     {
-        protected abstract void HandleIntermediateVisit(string methodName, [NotNull] dynamic context);
+        protected abstract void HandleIntermediateVisit(string methodName, [NotNull] ParserRuleContext context);
 
 
         /// <summary>

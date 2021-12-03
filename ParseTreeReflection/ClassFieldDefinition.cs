@@ -1,3 +1,6 @@
+using Antlr4.Runtime;
+using JavaAST.Helpers;
+
 namespace JavaAST.PaseTreeReflection
 {
     class ClassFieldDefinition : IDefinitionNode
@@ -5,12 +8,12 @@ namespace JavaAST.PaseTreeReflection
         public string? Name { get; set; }
         public string? TypeName { get; set; }
 
-        public void Attach(IDefinitionNode? node)
+        public void Attach(IDefinitionNode node)
         {
             throw new NotImplementedException();
         }
 
-        public void Build(string method, dynamic context)
+        public void Build(string method, ParserRuleContext context)
         {
             throw new NotImplementedException();
         }
