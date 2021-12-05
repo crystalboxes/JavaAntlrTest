@@ -9,9 +9,8 @@ public static class Program
     {
         // var def = TreeLoaderHelper.FromFile("Tests/HelloWorld.java");
         var def = TreeLoaderHelper.FromSource(@"class A {
-            class B {}
+            int x = (1 + 2) * 3;
         }");
-
         var gen = new CodeGenerator(def);
 
         Console.WriteLine("heloo world ");
