@@ -4,14 +4,13 @@ using static JavaAST.AntlrParser.Java9Parser;
 
 namespace JavaAST.PaseTreeReflection
 {
-    public class ClassDefinition : IDefinitionNode
+    public class ClassDefinition : TypeDefinition
     {
 
         public List<ClassDefinition> Classes { get => _classes; }
-        public string? Name { get => _name; }
         public List<string> Modifiers { get => _modifiers; }
 
-        public void Attach(IDefinitionNode node)
+        public override void Attach(IDefinitionNode node)
         {
             if (node is ClassDefinition)
             {
@@ -19,7 +18,7 @@ namespace JavaAST.PaseTreeReflection
             }
         }
 
-        public void Build(string method, ParserRuleContext context)
+        public override void Build(string method, ParserRuleContext context)
         {
             switch (method)
             {
@@ -37,7 +36,6 @@ namespace JavaAST.PaseTreeReflection
             }
         }
 
-        string? _name;
         List<string> _modifiers = new();
         List<ClassDefinition> _classes = new();
     }
