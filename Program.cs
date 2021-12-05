@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using JavaAST.Helpers;
 using JavaAST.AntlrParser;
+using JavaAST.CppCodegen;
 
 public static class Program
 {
@@ -11,6 +12,9 @@ public static class Program
             class B {}
         }");
 
+        var gen = new CodeGenerator(def);
+
         Console.WriteLine("heloo world ");
+        Console.WriteLine(gen.Header);
     }
 }
