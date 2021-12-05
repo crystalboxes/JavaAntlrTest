@@ -3,7 +3,7 @@ using JavaAST.Helpers;
 using System.Collections.Generic;
 namespace Tests
 {
-    public class UnitTest1
+    public class DefinitionGenerationTests
     {
         [Fact]
         public void TestClassNames()
