@@ -13,10 +13,6 @@ namespace JavaAST.PaseTreeReflection
             _name = name;
         }
 
-        public static Dictionary<string, TypeDefinition> Types = new()
-        {
-            { "int", new TypeDefinition("int") },
-        };
 
         public string? Name { get => _name; }
 
@@ -28,7 +24,18 @@ namespace JavaAST.PaseTreeReflection
         {
         }
 
+        public static TypeDefinition? GetPredefinedType(string name)
+        {
+            return Types.GetValueOrDefault(name);
+        }
+
         protected string? _name;
+
+        static Dictionary<string, TypeDefinition> Types = new()
+        {
+            { "int", new TypeDefinition("int") },
+            { "void", new TypeDefinition("void") },
+        };
     }
 
 }

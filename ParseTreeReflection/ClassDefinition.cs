@@ -6,15 +6,28 @@ namespace JavaAST.PaseTreeReflection
 {
     public class ClassDefinition : TypeDefinition
     {
-
         public List<ClassDefinition> Classes { get => _classes; }
         public List<string> Modifiers { get => _modifiers; }
+        public List<FieldDefinition> Fields { get => _fields; }
+        public List<MethodDefinition> Methods { get => _methods; }
 
         public override void Attach(IDefinitionNode node)
         {
             if (node is ClassDefinition)
             {
                 Classes.Add((node as ClassDefinition)!);
+            }
+            else if (node is FieldDefinition)
+            {
+                Fields.Add((node as FieldDefinition)!);
+            }
+            else if (node is MethodDefinition)
+            {
+                Methods.Add((node as MethodDefinition)!);
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -38,5 +51,7 @@ namespace JavaAST.PaseTreeReflection
 
         List<string> _modifiers = new();
         List<ClassDefinition> _classes = new();
+        List<FieldDefinition> _fields = new();
+        List<MethodDefinition> _methods = new();
     }
 }

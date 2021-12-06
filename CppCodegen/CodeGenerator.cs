@@ -13,12 +13,10 @@ namespace JavaAST.CppCodegen
             BuildHeader();
         }
 
-
         void BuildHeader()
         {
             _header.AddPragmaOnce();
             _header.AddInclude("runtime.h");
-
             _header.AddNewLine();
 
             foreach (var classDefinition in _unit.Classes)

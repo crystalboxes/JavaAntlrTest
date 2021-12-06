@@ -27,19 +27,6 @@ namespace JavaAST.ReflectionLoader
 
         public int Depth { get { return _depth; } }
 
-        protected override void HandleIntermediateVisit(string methodName, [NotNull] ParserRuleContext context)
-        {
-            _lastMethod = methodName;
-            _logger.Log(methodName, context);
-            _owner.Build(methodName, context);
-        }
-
-
-        public Result VisitChildrenBase(IRuleNode node)
-        {
-            return base.VisitChildren(node);
-        }
-
         public override Result VisitChildren(IRuleNode node)
         {
             IDefinitionNode newOwner;
@@ -50,12 +37,36 @@ namespace JavaAST.ReflectionLoader
                     newOwner = new ClassDefinition();
                     _owner.Attach(newOwner);
                     break;
+                case "VisitFieldDeclaration":
+                    newOwner = new FieldDefinition();
+                    _owner.Attach(newOwner);
+                    break;
+                case "VisitExpression":
+                    newOwner = new ExpressionDefinition();
+                    _owner.Attach(newOwner);
+                    break;
+                case "VisitMethodDeclaration":
+                    newOwner = new MethodDefinition();
+                    _owner.Attach(newOwner);
+                    break;
                 default:
                     newOwner = _owner;
                     break;
             }
             var childVisitor = new ReflectionVisitor(_depth + 1, newOwner);
             return childVisitor.VisitChildrenBase(node);
+        }
+
+        public Result VisitChildrenBase(IRuleNode node)
+        {
+            return base.VisitChildren(node);
+        }
+
+        protected override void HandleIntermediateVisit(string methodName, [NotNull] ParserRuleContext context)
+        {
+            _lastMethod = methodName;
+            _logger.Log(methodName, context);
+            _owner.Build(methodName, context);
         }
 
         string _lastMethod = "";
