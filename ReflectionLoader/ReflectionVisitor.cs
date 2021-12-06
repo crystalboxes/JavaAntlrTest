@@ -9,61 +9,36 @@ using Pastel;
 
 namespace JavaAST.ReflectionLoader
 {
-
     class ReflectionVisitor : ReflectionVisitorBase
     {
         public ReflectionVisitor(IDefinitionNode owner)
         {
             _depth = 0;
             _owner = owner;
+            _logger = new ReflectionLogger(this);
         }
 
         public ReflectionVisitor(int depth, IDefinitionNode owner)
         {
             _depth = depth;
             _owner = owner;
+            _logger = new ReflectionLogger(this);
         }
 
-
-
-        int _depth = 0;
-        IDefinitionNode _owner;
-        static List<string> _methodsToIgnore = new()
-        {
-        };
-
-        string _lastMethod = "";
+        public int Depth { get { return _depth; } }
 
         protected override void HandleIntermediateVisit(string methodName, [NotNull] ParserRuleContext context)
         {
             _lastMethod = methodName;
-            if (_methodsToIgnore.Contains(methodName))
-            {
-                Console.WriteLine($"____Ignored {methodName}");
-                return;
-            }
-            var space = "";
-            for (int i = 0; i < _depth; i++)
-            {
-                space += ".".Pastel("525252");
-            }
-
-            Console.WriteLine($"{space}{ProcessMethodName(methodName.Replace("Visit", "")).Pastel(Color.Turquoise)} {$"({methodName})".Pastel(Color.Gray)}: {context.Start.Text.Pastel(Color.Orange)}");
+            _logger.Log(methodName, context);
             _owner.Build(methodName, context);
         }
 
-        string ProcessMethodName(string methodName)
-        {
-            var result = methodName.SelectMany((c, i) => i != 0 && char.IsUpper(c) && !char.IsUpper(methodName[i - 1]) ? new char[] { ' ', c } : new char[] { c });
-            return new String(result.ToArray());
-        }
 
-
-        public Result VisitChildren2(IRuleNode node)
+        public Result VisitChildrenBase(IRuleNode node)
         {
             return base.VisitChildren(node);
         }
-
 
         public override Result VisitChildren(IRuleNode node)
         {
@@ -80,7 +55,13 @@ namespace JavaAST.ReflectionLoader
                     break;
             }
             var childVisitor = new ReflectionVisitor(_depth + 1, newOwner);
-            return childVisitor.VisitChildren2(node);
+            return childVisitor.VisitChildrenBase(node);
         }
+
+        string _lastMethod = "";
+        int _depth = 0;
+        IDefinitionNode _owner;
+        ReflectionLogger _logger;
+
     }
 }
