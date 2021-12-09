@@ -49,5 +49,15 @@ namespace Tests
             Assert.Equal("B", reflection.Classes[0].Classes[0].Name);
             Assert.Equal("static", reflection.Classes[0].Classes[0].Modifiers[0]);
         }
+
+        [Fact]
+        public void TestTypeExtraction()
+        {
+            var reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                public static void main(String[] args) {
+                }
+            }");
+            Assert.Single(reflection.Classes[0].Methods);
+        }
     }
 }

@@ -11,6 +11,13 @@ namespace JavaAST.PaseTreeReflection
 
         public void Attach(IDefinitionNode node)
         {
+            if (node is TypeDefinition)
+            {
+                if (_result == null)
+                {
+                    _result = node as TypeDefinition;
+                }
+            }
         }
 
         public void Build(string method, ParserRuleContext context)
@@ -25,9 +32,6 @@ namespace JavaAST.PaseTreeReflection
                     {
                         _name = context.Start.Text;
                     }
-                    break;
-                case "VisitResult":
-                    _result = TypeDefinition.GetPredefinedType(context.Start.Text);
                     break;
                 default:
                     break;

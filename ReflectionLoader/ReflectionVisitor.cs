@@ -1,11 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using JavaAST.AntlrParser;
-using JavaAST.Helpers;
 using JavaAST.PaseTreeReflection;
-using Pastel;
 
 namespace JavaAST.ReflectionLoader
 {
@@ -49,6 +45,10 @@ namespace JavaAST.ReflectionLoader
                     newOwner = new MethodDefinition();
                     _owner.Attach(newOwner);
                     break;
+                case "VisitResult":
+                    newOwner = new TypeDefinition();
+                    _owner.Attach(newOwner);
+                    break;
                 default:
                     newOwner = _owner;
                     break;
@@ -73,6 +73,5 @@ namespace JavaAST.ReflectionLoader
         int _depth = 0;
         IDefinitionNode _owner;
         ReflectionLogger _logger;
-
     }
 }
