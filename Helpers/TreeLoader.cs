@@ -1,7 +1,7 @@
 using Antlr4.Runtime;
 using JavaAST.AntlrParser;
-using JavaAST.PaseTreeReflection;
-using JavaAST.ReflectionLoader;
+using JavaAST.PaseTreeReflection2;
+using JavaAST.ReflectionLoader2;
 
 namespace JavaAST.Helpers
 {
@@ -21,7 +21,8 @@ namespace JavaAST.Helpers
             var tree = parser.compilationUnit();
 
             var def = new UnitDefinition();
-            var visitor = new ReflectionVisitor(0, def);
+            var visitor = new ReflectionVisitor(new ReflectionVisitorConfig(), 0);
+            visitor.Owner = def;
             visitor.Visit(tree);
             return def;
         }

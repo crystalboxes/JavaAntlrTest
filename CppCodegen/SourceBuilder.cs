@@ -1,7 +1,5 @@
 namespace JavaAST.CppCodegen
 {
-
-
     public class SourceBuilder : TokenBuildStream
     {
         public void AddNewLine()
