@@ -1,6 +1,6 @@
 
 
-namespace JavaAST.PaseTreeReflection2
+namespace JavaAST.PaseTreeReflection
 {
     public class TypeDefinition : IDefinition
     {

@@ -2,8 +2,8 @@
 using JavaAST.Helpers;
 using JavaAST.AntlrParser;
 using JavaAST.CppCodegen;
-using JavaAST.PaseTreeReflection2;
-using JavaAST.ReflectionLoader2;
+using JavaAST.PaseTreeReflection;
+using JavaAST.ReflectionLoader;
 
 public static class Program
 {

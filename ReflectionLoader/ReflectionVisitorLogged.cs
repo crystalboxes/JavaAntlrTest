@@ -5,7 +5,7 @@ using Antlr4.Runtime.Tree;
 using JavaAST.AntlrParser;
 using Pastel;
 
-namespace JavaAST.ReflectionLoader2
+namespace JavaAST.ReflectionLoader
 {
     internal class ReflectionVisitorLogged : ReflectionVisitorBase
     {

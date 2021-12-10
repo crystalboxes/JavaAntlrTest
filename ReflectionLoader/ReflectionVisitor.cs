@@ -3,10 +3,10 @@ using System.Drawing;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using JavaAST.AntlrParser;
-using JavaAST.PaseTreeReflection2;
+using JavaAST.PaseTreeReflection;
 using Pastel;
 
-namespace JavaAST.ReflectionLoader2
+namespace JavaAST.ReflectionLoader
 {
     internal class ReflectionVisitor : ReflectionVisitorLogged
     {

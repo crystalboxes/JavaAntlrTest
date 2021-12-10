@@ -1,7 +1,7 @@
 using Xunit;
 using JavaAST.Helpers;
 using System.Collections.Generic;
-using JavaAST.ReflectionLoader2;
+using JavaAST.ReflectionLoader;
 
 namespace Tests
 {
