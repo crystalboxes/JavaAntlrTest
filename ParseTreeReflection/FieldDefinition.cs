@@ -4,10 +4,10 @@ using static JavaAST.AntlrParser.Java9Parser;
 
 namespace JavaAST.PaseTreeReflection
 {
-    public class FieldDefinition : IDefinition
+    public class FieldDefinition : BaseDefinition
     {
         public string? Name { get; set; }
         public TypeDefinition? Type { get; set; }
-        public ExpressionDefinition? Expression { get; }
+        public List<VariableDeclaratorDefinition> VariableDeclarators { get; set; } = new();
     }
 }

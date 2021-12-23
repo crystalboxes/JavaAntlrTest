@@ -2,7 +2,7 @@
 
 namespace JavaAST.PaseTreeReflection
 {
-    public class ClassDefinition : IDefinition
+    public class ClassDefinition : BaseDefinition
     {
         public string? Name { get; set; }
         public List<string> Modifiers { get; set; } = new();

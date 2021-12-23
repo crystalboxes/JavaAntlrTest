@@ -29,6 +29,7 @@ namespace JavaAST.ReflectionLoader
         {
             var child = CreateChild(Config, _depth + 1);
             child.Owner = NextOwner ?? Owner;
+            NextOwner = null;
             return child.VisitChildrenBase(node);
         }
         public IDefinition? Owner { get; set; } = null;

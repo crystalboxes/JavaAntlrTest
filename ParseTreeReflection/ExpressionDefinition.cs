@@ -3,7 +3,7 @@ using JavaAST.Helpers;
 
 namespace JavaAST.PaseTreeReflection
 {
-    public class ExpressionDefinition : IDefinition
+    public class ExpressionDefinition : BaseDefinition
     {
     }
 }

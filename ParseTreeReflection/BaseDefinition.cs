@@ -4,8 +4,8 @@ using static JavaAST.AntlrParser.Java9Parser;
 
 namespace JavaAST.PaseTreeReflection
 {
-    public interface IDefinition
+    public class BaseDefinition : IDefinition
     {
-        IDefinition? Parent { get; set; }
+        public IDefinition? Parent { get; set; } = null;
     }
 }

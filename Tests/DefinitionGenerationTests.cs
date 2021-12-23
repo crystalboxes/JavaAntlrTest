@@ -2,6 +2,7 @@ using Xunit;
 using JavaAST.Helpers;
 using System.Collections.Generic;
 using JavaAST.ReflectionLoader;
+using JavaAST.PaseTreeReflection;
 
 namespace Tests
 {
@@ -53,13 +54,90 @@ namespace Tests
         }
 
         [Fact]
-        public void TestTypeExtraction()
+        public void TestMethodTypeExtraction()
         {
             var reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
                 public static void main(String[] args) {
                 }
             }");
+
+            Assert.Equal("main", reflection.Classes[0].Methods[0].Name);
+
             Assert.Single(reflection.Classes[0].Methods);
+            Assert.Equal("void", reflection.Classes[0].Methods[0].Result?.Name);
+        }
+        [Fact]
+        public void TestIntegralMethodTypeExtraction()
+        {
+            UnitDefinition reflection;
+
+            reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                public static int[] main() {
+                }
+            }");
+            Assert.Equal("int[]", reflection.Classes[0].Methods[0].Result?.Name);
+            Assert.True(reflection.Classes[0].Methods[0].Result?.IsArrayType);
+            Assert.Equal("int", reflection.Classes[0].Methods[0].Result?.IntegralTypeName);
+
+            reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                    public static String main() {
+                    }
+                }");
+            Assert.True(reflection.Classes[0].Methods[0].Result?.IsInterfaceType);
+        }
+
+        [Fact]
+        public void TestFieldTypeExtraction()
+        {
+            UnitDefinition reflection;
+
+            reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                int[] x;
+            }");
+            Assert.Equal("int[]", reflection.Classes[0].Fields[0].Type?.Name);
+            Assert.True(reflection.Classes[0].Fields[0].Type?.IsArrayType);
+            Assert.Equal("int", reflection.Classes[0].Fields[0].Type?.IntegralTypeName);
+        }
+
+        [Fact]
+        public void TestVariableDeclarators()
+        {
+            UnitDefinition reflection;
+
+            reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                int[] x,y,z;
+                String l;
+            }");
+            Assert.Equal("x", reflection.Classes[0].Fields[0].VariableDeclarators[0].Name);
+            Assert.Equal("y", reflection.Classes[0].Fields[0].VariableDeclarators[1].Name);
+            Assert.Equal("z", reflection.Classes[0].Fields[0].VariableDeclarators[2].Name);
+
+            Assert.Equal("l", reflection.Classes[0].Fields[1].VariableDeclarators[0].Name);
+            Assert.Equal("String", reflection.Classes[0].Fields[1].Type!.Name);
+        }
+        [Fact]
+        public void TestMethodArgumentsTypeExtraction()
+        {
+            UnitDefinition reflection;
+
+            reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                void x(int a, String b, double c = 2.0) {}
+            }");
+            Assert.Equal("int", reflection.Classes[0].Methods[0].Arguments.Arguments[0].Type!.Name);
+            Assert.Equal("String", reflection.Classes[0].Methods[0].Arguments.Arguments[1].Type!.Name);
+            Assert.Equal("double", reflection.Classes[0].Methods[0].Arguments.Arguments[2].Type!.Name);
+        }
+        [Fact]
+        public void TestMethodArgumentsNameExtraction()
+        {
+            UnitDefinition reflection;
+
+            reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
+                void x(int a, String b, double c = 2.0) {}
+            }");
+            Assert.Equal("a", reflection.Classes[0].Methods[0].Arguments.Arguments[0].Name);
+            Assert.Equal("b", reflection.Classes[0].Methods[0].Arguments.Arguments[1].Name);
+            Assert.Equal("c", reflection.Classes[0].Methods[0].Arguments.Arguments[2].Name);
         }
     }
 }

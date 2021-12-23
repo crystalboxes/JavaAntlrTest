@@ -4,10 +4,12 @@ using static JavaAST.AntlrParser.Java9Parser;
 
 namespace JavaAST.PaseTreeReflection
 {
-    public class MethodDefinition : IDefinition
+    public class MethodDefinition : BaseDefinition
     {
         public string? Name { get; set; }
         public TypeDefinition? Result { get; set; }
         public List<string> Modifiers { get; set; } = new();
+
+        public ArgumentListDefinition Arguments { get; set; } = new();
     }
 }
