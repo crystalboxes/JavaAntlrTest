@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<PageTitle>Java to C++</PageTitle>
+
+<div class="container my-3">
+  <div class="row">
+    <div class="col-sm">
+      <h1>JavaAST</h1>
+      <button class="btn btn-primary" @onclick="Convert">Convert</button>
+    </div>
+  </div>
+</div>
+<div class="container my-3">
+  <div class="row">
+    <div class="col-sm" style="min-height:500px;">
+      <textarea style="height:100%; font-family: monospace;" class="h-100 w-100 rounded" @bind="Description"
+        @bind:event="oninput"></textarea>
+    </div>
+    <div class="col-sm rounded bg-light">
+      <pre>@sourceOutput</pre>
+    </div>
+  </div>
+</div>
+
+@code {
+
+  public string Description { get; set; } = @"class A {}";
+
+  private string sourceOutput = "";
+
+  private void Convert()
+  {
+    var def = Java2Cpp.Helpers.TreeLoaderHelper.FromSource(Description);
+    var gen = new Java2Cpp.CppCodegen.CodeGenerator(def);
+    sourceOutput = gen.Header;
+  }
+}

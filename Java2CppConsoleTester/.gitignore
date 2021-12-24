@@ -1,0 +1,5 @@
+bin
+obj
+*/**/obj
+.swp
+.DS_Store
