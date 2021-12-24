@@ -30,8 +30,17 @@ namespace JavaAST.ReflectionLoader
             var child = CreateChild(Config, _depth + 1);
             child.Owner = NextOwner ?? Owner;
             NextOwner = null;
+
+            VisitorChildren.Add(child);
+
             return child.VisitChildrenBase(node);
         }
+
+
+        public List<ReflectionVisitorBase> VisitorChildren { get; set; } = new();
+        public string VisitorName { get; set; } = "";
+        public string VisitorContextText { get; set; } = "";
+
         public IDefinition? Owner { get; set; } = null;
         protected int Depth { get => _depth; }
         protected virtual ReflectionVisitorBase CreateChild(ReflectionVisitorConfig config, int depth) => new ReflectionVisitorBase(config, depth);

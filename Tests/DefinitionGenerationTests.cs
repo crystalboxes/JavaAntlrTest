@@ -123,9 +123,9 @@ namespace Tests
             reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
                 void x(int a, String b, double c = 2.0) {}
             }");
-            Assert.Equal("int", reflection.Classes[0].Methods[0].Arguments.Arguments[0].Type!.Name);
-            Assert.Equal("String", reflection.Classes[0].Methods[0].Arguments.Arguments[1].Type!.Name);
-            Assert.Equal("double", reflection.Classes[0].Methods[0].Arguments.Arguments[2].Type!.Name);
+            Assert.Equal("int", reflection.Classes[0].Methods[0].Arguments.Entries[0].Type!.Name);
+            Assert.Equal("String", reflection.Classes[0].Methods[0].Arguments.Entries[1].Type!.Name);
+            Assert.Equal("double", reflection.Classes[0].Methods[0].Arguments.Entries[2].Type!.Name);
         }
         [Fact]
         public void TestMethodArgumentsNameExtraction()
@@ -135,9 +135,9 @@ namespace Tests
             reflection = TreeLoaderHelper.FromSource(@"class HelloWorld {
                 void x(int a, String b, double c = 2.0) {}
             }");
-            Assert.Equal("a", reflection.Classes[0].Methods[0].Arguments.Arguments[0].Name);
-            Assert.Equal("b", reflection.Classes[0].Methods[0].Arguments.Arguments[1].Name);
-            Assert.Equal("c", reflection.Classes[0].Methods[0].Arguments.Arguments[2].Name);
+            Assert.Equal("a", reflection.Classes[0].Methods[0].Arguments.Entries[0].Name);
+            Assert.Equal("b", reflection.Classes[0].Methods[0].Arguments.Entries[1].Name);
+            Assert.Equal("c", reflection.Classes[0].Methods[0].Arguments.Entries[2].Name);
         }
     }
 }

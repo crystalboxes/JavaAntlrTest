@@ -61,7 +61,11 @@ namespace JavaAST.CppCodegen
 
         string TransformArgumentsList(ArgumentListDefinition args)
         {
-            return args.Arguments.Select(x => $"{new CppTypeResolver(x.Type).Representation} {x.Name}").Aggregate((acc, x) => $"{acc}, {x}")!;
+            if (args.Entries.Count == 0)
+            {
+                return "";
+            }
+            return args.Entries.Select(x => $"{new CppTypeResolver(x.Type).Representation} {x.Name}").Aggregate((acc, x) => $"{acc}, {x}")!;
         }
 
         void BuildFieldDeclaration(FieldDefinition fieldDefinition)

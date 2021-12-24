@@ -5,5 +5,7 @@ namespace JavaAST.PaseTreeReflection
 {
     public class ExpressionDefinition : BaseDefinition
     {
+        public string? Identifier { get; set; }
+        public string? Literal { get; set; }
     }
 }

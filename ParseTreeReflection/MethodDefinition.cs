@@ -11,5 +11,7 @@ namespace JavaAST.PaseTreeReflection
         public List<string> Modifiers { get; set; } = new();
 
         public ArgumentListDefinition Arguments { get; set; } = new();
+
+        public StatementsBlockDefinition? Statements { get; set; }
     }
 }

@@ -67,8 +67,24 @@ namespace JavaAST.ReflectionLoader
                 var variableDeclarator = (Owner as VariableDeclaratorDefinition)!;
                 variableDeclarator.Name = context.Start.Text;
             }
+            else if (Owner is ExpressionDefinition)
+            {
+                var expressionDefinition = (Owner as ExpressionDefinition)!;
+                expressionDefinition.Identifier = context.Start.Text;
+            }
             return VisitChildren(context);
         }
+
+        public override Result VisitLiteral([NotNull] Java9Parser.LiteralContext context)
+        {
+            if (Owner is ExpressionDefinition)
+            {
+                var expressionDefinition = (Owner as ExpressionDefinition)!;
+                expressionDefinition.Literal = context.Start.Text;
+            }
+            return VisitChildren(context);
+        }
+
 
         public override Result VisitMethodDeclaration(Java9Parser.MethodDeclarationContext context)
         {
@@ -116,6 +132,11 @@ namespace JavaAST.ReflectionLoader
             else if (Owner is VariableDeclaratorDefinition)
             {
                 var variableDeclarator = (Owner as VariableDeclaratorDefinition)!;
+                variableDeclarator.Type = typeDefinition;
+            }
+            else if (Owner is LocalVariableDeclarationStatementDefinition)
+            {
+                var variableDeclarator = (Owner as LocalVariableDeclarationStatementDefinition)!;
                 variableDeclarator.Type = typeDefinition;
             }
 
@@ -195,7 +216,7 @@ namespace JavaAST.ReflectionLoader
                 var argumentList = (Owner as ArgumentListDefinition)!;
                 var variableDeclarator = new VariableDeclaratorDefinition();
                 variableDeclarator.Parent = Owner;
-                argumentList.Arguments.Add(variableDeclarator);
+                argumentList.Entries.Add(variableDeclarator);
                 NextOwner = variableDeclarator;
             }
 
@@ -214,7 +235,56 @@ namespace JavaAST.ReflectionLoader
 
             return VisitChildren(context);
         }
+        public override Result VisitBlockStatements([NotNull] Java9Parser.BlockStatementsContext context)
+        {
+            var statemements = new StatementsBlockDefinition();
+
+            var methodDefinition = (Owner as MethodDefinition)!;
+            methodDefinition.Statements = statemements;
+
+            NextOwner = statemements;
+            statemements.Parent = Owner;
+            return VisitChildren(context);
+        }
 
 
+        public override Result VisitLocalVariableDeclarationStatement([NotNull] Java9Parser.LocalVariableDeclarationStatementContext context)
+        {
+            var blockStatement = new LocalVariableDeclarationStatementDefinition();
+            var statements = (Owner as StatementsBlockDefinition)!;
+            blockStatement.Parent = statements;
+            statements.Entries.Add(blockStatement);
+            NextOwner = blockStatement;
+            return VisitChildren(context);
+        }
+
+        public override Result VisitReturnStatement([NotNull] Java9Parser.ReturnStatementContext context)
+        {
+            var blockStatement = new ReturnStatementDefinition();
+            var statements = (Owner as StatementsBlockDefinition)!;
+            blockStatement.Parent = statements;
+            statements.Entries.Add(blockStatement);
+            NextOwner = blockStatement;
+            return VisitChildren(context);
+        }
+
+        public override Result VisitExpression([NotNull] Java9Parser.ExpressionContext context)
+        {
+            var expression = new ExpressionDefinition();
+            if (Owner is ReturnStatementDefinition)
+            {
+                var returnStatement = (Owner as ReturnStatementDefinition)!;
+                returnStatement.Expression = expression;
+            }
+
+            expression.Parent = Owner;
+            NextOwner = expression;
+            return VisitChildren(context);
+        }
+
+        public override Result VisitMultiplicativeExpression([NotNull] Java9Parser.MultiplicativeExpressionContext context) { 
+            
+            
+            return VisitChildren(context); }
     }
 }

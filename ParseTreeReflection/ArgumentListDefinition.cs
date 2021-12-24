@@ -5,6 +5,6 @@ namespace JavaAST.PaseTreeReflection
 {
     public class ArgumentListDefinition : BaseDefinition
     {
-        public List<VariableDeclaratorDefinition> Arguments { get; set; } = new();
+        public List<VariableDeclaratorDefinition> Entries { get; set; } = new();
     }
 }

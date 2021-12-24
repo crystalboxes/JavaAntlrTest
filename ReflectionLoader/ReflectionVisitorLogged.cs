@@ -20,6 +20,8 @@ namespace JavaAST.ReflectionLoader
             {
                 LogCall(node);
             }
+
+
             return base.VisitChildren(node);
         }
 
@@ -29,6 +31,10 @@ namespace JavaAST.ReflectionLoader
             var st = new StackTrace(new StackFrame(2));
             var methodName = st.GetFrame(0)?.GetMethod()?.Name ?? "Unknown";
             var contextText = (node as ParserRuleContext)?.Start.Text ?? "..";
+
+            VisitorName = ProcessMethodName(methodName);
+            VisitorContextText = contextText;
+
             var depth = Depth;
             PrettyPrintLog(depth, methodName, contextText);
         }
@@ -47,7 +53,8 @@ namespace JavaAST.ReflectionLoader
         static string ProcessMethodName(string methodName)
         {
             var result = methodName.SelectMany((c, i) => i != 0 && char.IsUpper(c) && !char.IsUpper(methodName[i - 1]) ? new char[] { ' ', c } : new char[] { c });
-            return new String(result.ToArray());
+            var processedMethodName = new String(result.ToArray());
+            return processedMethodName;
         }
     }
 }
