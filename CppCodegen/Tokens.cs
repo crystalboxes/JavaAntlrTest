@@ -2,6 +2,7 @@ namespace JavaAST.CppCodegen
 {
     public static class Tokens
     {
+        public static string DOUBLE_QUOTE = "\"";
         public static string SEMICOLON = ";";
         public static string COLON = ":";
         public static string DOUBLE_COLON = "::";

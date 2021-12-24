@@ -10,7 +10,8 @@ public static class Program
     public static void Main()
     {
         var text = @"class HelloWorld {
-            void x(int a, String b, double c = 2.0) {}
+            int a,b,c;
+            void x(int a, String b, double c) {}
         }";
 
         var lexer = new Java9Lexer(new AntlrInputStream(text));
@@ -19,11 +20,14 @@ public static class Program
         var tree = parser.compilationUnit();
 
         var def = new UnitDefinition();
+
         var visitor = new ReflectionVisitor(new ReflectionVisitorConfig() { ShouldLog = true }, 0);
         visitor.Owner = def;
         visitor.Visit(tree);
+        
         var gen = new CodeGenerator(def);
-
         Console.WriteLine(gen.Header);
+        Console.WriteLine("----------------");
+        Console.WriteLine(gen.Implementation);
     }
 }
